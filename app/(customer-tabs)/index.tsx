@@ -6,7 +6,10 @@ import { Text } from "@/components/Text";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   NasscriptLogo,
-  
+  ClientRelationShip,
+  BugReport,
+  ClientRequirements,
+  Maintenance,
   ClientTicketing,
 } from "@/constants/images";
 import { MenuCardProp } from "@/types/type";
@@ -45,6 +48,12 @@ export default function Index() {
   const menuItems = [
 
     { title: "Ticketing", icon: ClientTicketing, color: "#f97316", route: "/(customer-tabs)/customerTicketing", animation: FadeInRight.duration(700).delay(400) },
+        { title: "Support", icon: ClientRelationShip, color: "#f97316", route: "/(customer-tabs)/support", animation: FadeInRight.duration(700).delay(400) },
+    { title: "Bug Report", icon: BugReport, color: "#f97316", route: "/(customer-tabs)/bugReport", animation: FadeInRight.duration(700).delay(400) },
+    { title: "Training", icon: ClientRequirements, color: "#f97316", route: "/(customer-tabs)/training", animation: FadeInRight.duration(700).delay(400) },
+        { title: "Maintenance", icon: Maintenance, color: "#f97316", route: "/(customer-tabs)/maintenance", animation: FadeInRight.duration(700).delay(400) },
+
+
   ];
 
   return (

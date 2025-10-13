@@ -11,92 +11,117 @@ import { Text } from "@/components/Text";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import {
-  AntDesign,
-  Ionicons,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import TicketDetailsModal from "@/components/customer/TicketDetailsModal";
 
-const TicketCard = ({ item, index }: { item: any; index: number }) => (
-  <Animated.View
-    entering={FadeInDown.delay(index * 100).duration(600)}
-    className="mb-4 px-4"
-  >
-    <LinearGradient
-      colors={["rgba(255,255,255,0.1)", "rgba(255,255,255,0.05)"]}
-      className="rounded-2xl p-0.5"
-    >
-      <View className="bg-[#18181b] rounded-2xl overflow-hidden">
-        <View className="p-4">
-          {/* Header */}
-          <View className="flex-row justify-between items-center mb-4">
-            <View className="flex-row items-center space-x-2">
-              <Text className="text-gray-400" fontFamily="KumbhSans">
-                Ticket ID: {item.id}
-              </Text>
-              <View className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-              <Text className="text-gray-400" fontFamily="KumbhSans">
-                {item.priority} Priority
-              </Text>
-            </View>
+const TicketCard = ({ item, index }: { item: any; index: number }) => {
+  const [showDetails, setShowDetails] = useState(false);
 
-            <View
-              className={`px-3 py-1 rounded-full ${
-                item.status === "open"
-                  ? "bg-amber-500/20"
-                  : item.status === "in-progress"
-                  ? "bg-blue-500/20"
-                  : "bg-green-500/20"
-              }`}
-            >
-              <Text
-                className={`text-sm ${
-                  item.status === "open"
-                    ? "text-amber-400"
-                    : item.status === "in-progress"
-                    ? "text-blue-400"
-                    : "text-green-400"
-                }`}
-                fontFamily="KumbhSans-Medium"
+  return (
+    <>
+      <Animated.View
+        entering={FadeInDown.delay(index * 100).duration(600)}
+        className="mb-4 px-4"
+      >
+        <LinearGradient
+          colors={["rgba(255,255,255,0.1)", "rgba(255,255,255,0.05)"]}
+          className="rounded-2xl p-0.5"
+        >
+          <View className="bg-[#18181b] rounded-2xl overflow-hidden">
+            <View className="p-4">
+              {/* Header */}
+              <View className="flex-row justify-between items-center mb-4">
+                <View className="flex-row items-center space-x-2">
+                  <Text className="text-gray-400" fontFamily="KumbhSans">
+                    Ticket ID: {item.id}
+                  </Text>
+                  <View className="w-1.5 h-1.5 rounded-full bg-gray-400" />
+                  <Text className="text-gray-400" fontFamily="KumbhSans">
+                    {item.priority} Priority
+                  </Text>
+                </View>
+
+                <View
+                  className={`px-3 py-1 rounded-full ${
+                    item.status === "open"
+                      ? "bg-amber-500/20"
+                      : item.status === "in-progress"
+                      ? "bg-blue-500/20"
+                      : "bg-green-500/20"
+                  }`}
+                >
+                  <Text
+                    className={`text-sm ${
+                      item.status === "open"
+                        ? "text-amber-400"
+                        : item.status === "in-progress"
+                        ? "text-blue-400"
+                        : "text-green-400"
+                    }`}
+                    fontFamily="KumbhSans-Medium"
+                  >
+                    {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                  </Text>
+                </View>
+              </View>
+
+              {/* Subject / Project / Date */}
+              <View className="mb-4">
+                <Text
+                  className="text-white text-xl mb-1"
+                  fontFamily="KumbhSans-Bold"
+                >
+                  {item.subject}
+                </Text>
+
+                <View className="flex flex-row space-x-2 my-2 items-center">
+                  <MaterialIcons name="folder-open" size={20} color="white" />
+                  <Text
+                    className="text-gray-400 text-sm"
+                    fontFamily="KumbhSans"
+                  >
+                    {item.project}
+                  </Text>
+                </View>
+
+                <View className="flex flex-row space-x-2 my-2 items-center">
+                  <Ionicons name="calendar-outline" size={20} color="white" />
+                  <Text
+                    className="text-gray-400 text-sm"
+                    fontFamily="KumbhSans"
+                  >
+                    {item.createdDate}
+                  </Text>
+                </View>
+              </View>
+
+              <TouchableOpacity
+                onPress={() => setShowDetails(true)}
+                className="mt-2 bg-[#B4925E] rounded-xl px-4 py-2 self-start"
               >
-                {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
-              </Text>
+                <Text className="text-white text-sm font-[KumbhSans-Medium]">
+                  View Details / Chat
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
+        </LinearGradient>
+      </Animated.View>
 
-          {/* Subject / Project / Date */}
-          <View className="mb-4">
-            <Text
-              className="text-white text-xl mb-1"
-              fontFamily="KumbhSans-Bold"
-            >
-              {item.subject}
-            </Text>
-
-            <View className="flex flex-row space-x-2 my-2 items-center">
-              <MaterialIcons name="folder-open" size={20} color="white" />
-              <Text className="text-gray-400 text-sm" fontFamily="KumbhSans">
-                {item.project}
-              </Text>
-            </View>
-
-            <View className="flex flex-row space-x-2 my-2 items-center">
-              <Ionicons name="calendar-outline" size={20} color="white" />
-              <Text className="text-gray-400 text-sm" fontFamily="KumbhSans">
-                {item.createdDate}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    </LinearGradient>
-  </Animated.View>
-);
+      <TicketDetailsModal
+        visible={showDetails}
+        onClose={() => setShowDetails(false)}
+        ticket={item}
+      />
+    </>
+  );
+};
 
 const CustomerTicketing = () => {
   const insets = useSafeAreaInsets();
 
+  // DUMMY DATA WITH MESSAGES + IMAGE SUPPORT
   const dummyData = [
     {
       id: "T-101",
@@ -105,6 +130,26 @@ const CustomerTicketing = () => {
       createdDate: "2025-10-03",
       priority: "High",
       status: "open",
+      messages: [
+        {
+          id: "m1",
+          text: "I'm unable to log in using my credentials.",
+          sender: "customer",
+          time: "10:30 AM",
+        },
+        {
+          id: "m2",
+          text: "We’re investigating this issue, could you confirm your device version?",
+          sender: "staff",
+          time: "11:00 AM",
+        },
+        {
+          id: "m3",
+          text: "It’s Android 14 on Pixel 7.",
+          sender: "customer",
+          time: "11:05 AM",
+        },
+      ],
     },
     {
       id: "T-102",
@@ -113,6 +158,22 @@ const CustomerTicketing = () => {
       createdDate: "2025-10-02",
       priority: "Medium",
       status: "in-progress",
+      messages: [
+        {
+          id: "m1",
+          text: "We've checked your printer configuration. Please see attached screenshot.",
+          sender: "staff",
+          time: "09:40 AM",
+          image:
+            "https://images.unsplash.com/photo-1581090700227-1e37b190418e?w=400",
+        },
+        {
+          id: "m2",
+          text: "Got it, thanks! Let me try reconnecting.",
+          sender: "customer",
+          time: "09:50 AM",
+        },
+      ],
     },
     {
       id: "T-103",
@@ -121,6 +182,20 @@ const CustomerTicketing = () => {
       createdDate: "2025-10-01",
       priority: "Low",
       status: "closed",
+      messages: [
+        {
+          id: "m1",
+          text: "We found a sync issue in the data pipeline, fixed it now.",
+          sender: "staff",
+          time: "04:10 PM",
+        },
+        {
+          id: "m2",
+          text: "Verified — data looks correct now. Thanks!",
+          sender: "customer",
+          time: "04:25 PM",
+        },
+      ],
     },
   ];
 
@@ -134,7 +209,6 @@ const CustomerTicketing = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
-  // Filtering logic
   const filteredTickets = dummyData.filter((ticket) => {
     const matchesProject =
       !selectedProject || ticket.project === selectedProject;
@@ -175,7 +249,12 @@ const CustomerTicketing = () => {
           </View>
 
           <Pressable
-            onPress={() => router.navigate("/add-customer-ticket")}
+            onPress={() =>
+              router.push({
+                pathname: "/add-customer-ticket",
+                params: { ticketCount: dummyData.length },
+              })
+            }
             className="h-10 px-4 rounded-xl flex-row items-center space-x-2 bg-[#B4925E]"
           >
             <AntDesign name="plus" size={20} color="white" />
@@ -277,7 +356,7 @@ const CustomerTicketing = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: 100,
-          paddingTop: showDropdown ? 200 : 0, // ensures dropdown isn't overlapped
+          paddingTop: showDropdown ? 200 : 0,
         }}
         ListEmptyComponent={() => (
           <Text

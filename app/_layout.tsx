@@ -166,7 +166,16 @@ function RootLayoutNav() {
           name="add-customer-ticket"
           options={{ headerShown: false }}
         />
+         <Stack.Screen
+          name="add-bug-report"
+          options={{ headerShown: false }}
+        />
+           <Stack.Screen
+          name="request-training"
+          options={{ headerShown: false }}
+        />
       </Stack>
+      
       
     </ThemeProvider>
   );
