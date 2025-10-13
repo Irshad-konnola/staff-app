@@ -119,7 +119,7 @@ import {
 } from "@/constants/images";
 import { Text } from "@/components/Text";
 import CustomDrawerContentTwo from "@/components/CustomDrawerContentTwo";
-
+import FloatingAppsButton from "@/components/customer/FloatingAppsButton";
 const icons: {
   ticketing: any;
   support: any;
@@ -253,6 +253,7 @@ export default function DrawerLayout() {
           }}
         />
       </Drawer>
+      {/* <FloatingAppsButton/> */}
     </GestureHandlerRootView>
   );
 }

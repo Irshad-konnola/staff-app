@@ -18,7 +18,12 @@ const AddTicket = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  // Dummy customers
+  const [priority, setPriority] = useState<string | null>(null);
+  const [priorityVisible, setPriorityVisible] = useState(false);
+
+  const [status, setStatus] = useState<string | null>(null);
+  const [statusVisible, setStatusVisible] = useState(false);
+
   const dummyCustomers = [
     "Acme Corp",
     "John Doe",
@@ -32,7 +37,9 @@ const AddTicket = () => {
     "Oceanic Ventures",
   ];
 
-  // Filter customers by search
+  const priorities = ["Low", "Medium", "High"];
+  const statuses = ["Open", "In-progress", "Closed"];
+
   const filteredCustomers = dummyCustomers.filter((name) =>
     name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -99,7 +106,9 @@ const AddTicket = () => {
         <View className="relative mb-6">
           <View
             className={`bg-[#1A1A1A] rounded-xl border ${
-              focusedInput === "Customer" ? "border-amber-500" : "border-gray-800"
+              focusedInput === "Customer"
+                ? "border-amber-500"
+                : "border-gray-800"
             } flex-row items-center px-3`}
           >
             <TextInput
@@ -135,13 +144,9 @@ const AddTicket = () => {
             )}
           </View>
 
-          {/* Dropdown - Fixed with ScrollView instead of FlatList */}
           {dropdownVisible && filteredCustomers.length > 0 && (
             <View className="absolute top-14 w-full bg-[#1E1E1E] border border-gray-700 rounded-xl max-h-60 z-50">
-              <ScrollView
-                keyboardShouldPersistTaps="handled"
-                nestedScrollEnabled
-              >
+              <ScrollView keyboardShouldPersistTaps="handled" nestedScrollEnabled>
                 {filteredCustomers.map((item) => (
                   <TouchableOpacity
                     key={item}
@@ -162,8 +167,92 @@ const AddTicket = () => {
           numberOfLines: 4,
           textAlignVertical: "top",
         })}
-        {renderInputContainer("Priority", "e.g. Low, Medium, High")}
-        {renderInputContainer("Status", "e.g. Open, In-progress, Closed")}
+
+        {/* Priority Selector */}
+        <View className="space-y-2 mb-4">
+          <Text className="text-gray-300 text-[15px] font-medium ml-1">
+            Priority
+          </Text>
+          <View className="relative">
+            <TouchableOpacity
+              className="bg-[#1A1A1A] rounded-xl border border-gray-800 px-4 py-3.5 flex-row justify-between items-center"
+              onPress={() => {
+                setPriorityVisible(!priorityVisible);
+                Haptics.selectionAsync();
+              }}
+            >
+              <Text className="text-white text-[15px] font-medium">
+                {priority || "Select priority"}
+              </Text>
+              <Ionicons
+                name={priorityVisible ? "chevron-up" : "chevron-down"}
+                size={18}
+                color="#999"
+              />
+            </TouchableOpacity>
+
+            {priorityVisible && (
+              <View className="absolute top-14 w-full bg-[#1E1E1E] border border-gray-700 rounded-xl z-50">
+                {priorities.map((item) => (
+                  <TouchableOpacity
+                    key={item}
+                    className="px-4 py-3 border-b border-gray-800"
+                    onPress={() => {
+                      setPriority(item);
+                      setPriorityVisible(false);
+                      Haptics.selectionAsync();
+                    }}
+                  >
+                    <Text className="text-white text-[15px]">{item}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
+        </View>
+
+        {/* Status Selector */}
+        <View className="space-y-2 mb-4">
+          <Text className="text-gray-300 text-[15px] font-medium ml-1">
+            Status
+          </Text>
+          <View className="relative">
+            <TouchableOpacity
+              className="bg-[#1A1A1A] rounded-xl border border-gray-800 px-4 py-3.5 flex-row justify-between items-center"
+              onPress={() => {
+                setStatusVisible(!statusVisible);
+                Haptics.selectionAsync();
+              }}
+            >
+              <Text className="text-white text-[15px] font-medium">
+                {status || "Select status"}
+              </Text>
+              <Ionicons
+                name={statusVisible ? "chevron-up" : "chevron-down"}
+                size={18}
+                color="#999"
+              />
+            </TouchableOpacity>
+
+            {statusVisible && (
+              <View className="absolute top-14 w-full bg-[#1E1E1E] border border-gray-700 rounded-xl z-50">
+                {statuses.map((item) => (
+                  <TouchableOpacity
+                    key={item}
+                    className="px-4 py-3 border-b border-gray-800"
+                    onPress={() => {
+                      setStatus(item);
+                      setStatusVisible(false);
+                      Haptics.selectionAsync();
+                    }}
+                  >
+                    <Text className="text-white text-[15px]">{item}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
+        </View>
 
         {/* Action Buttons */}
         <View className="flex-row justify-end space-x-3 py-6 mb-5">
@@ -182,8 +271,9 @@ const AddTicket = () => {
               Haptics.selectionAsync();
               console.log("Ticket saved with:", {
                 customer: selectedCustomer,
+                priority,
+                status,
               });
-              // TODO: integrate API later
             }}
           >
             <Text className="text-black font-medium">Save</Text>

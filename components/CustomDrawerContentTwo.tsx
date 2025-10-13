@@ -6,6 +6,10 @@ import { cn } from "@/lib/utils";
 import {
   NasscriptLogo,
   ClientTicketing,
+  ClientRelationShip,
+  BugReport,
+  ClientRequirements,
+  Maintenance
 } from "@/constants/images";
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
 import { DrawerNavigationState, ParamListBase } from "@react-navigation/native";
@@ -21,6 +25,11 @@ const CustomDrawerContentTwo = ({
 
   const menuItems = [
     { name: "customerTicketing", title: "Ticketing", icon: ClientTicketing },
+        { name: "support", title: "Support", icon: ClientRelationShip },
+    { name: "bugReport", title: "Bug Report", icon: BugReport },
+    { name: "training", title: "Training", icon: ClientRequirements },
+    { name: "maintenance", title: "Maintenance", icon: Maintenance },
+
   ];
 
   const currentRouteName = state.routeNames[state.index];

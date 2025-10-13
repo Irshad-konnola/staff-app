@@ -13,6 +13,7 @@ import {
   ClientTicketing,
 } from "@/constants/images";
 import { MenuCardProp } from "@/types/type";
+import FloatingAppsButton from "@/components/customer/FloatingAppsButton";
 
 const { width } = Dimensions.get("window");
 
@@ -87,6 +88,7 @@ export default function Index() {
           ))}
         </View>
       </ScrollView>
+      <FloatingAppsButton/>
     </View>
   );
 }
