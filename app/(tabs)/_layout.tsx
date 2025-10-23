@@ -97,9 +97,9 @@ export default function DrawerLayout() {
         <Drawer.Screen
           name="requests"
           options={{
-            drawerLabel: "requests",
+            drawerLabel: "leads",
             header: ({ navigation }) => (
-              <CustomeHeader navigation={navigation} title="Client Requests" />
+              <CustomeHeader navigation={navigation} title="Client Leads" />
             ),
           }}
         />

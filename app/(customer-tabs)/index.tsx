@@ -68,10 +68,7 @@ export default function Index() {
           <View className="flex justify-center flex-row">
             <Image source={NasscriptLogo} className="w-40 h-12 mb-4" resizeMode="contain" />
           </View>
-          <Text className="text-[34px] text-white" fontFamily="KumbhSans-Bold">ERP Management</Text>
-          {/* <Text className="text-[15px] leading-6 text-gray-300" fontFamily="KumbhSans-Medium">
-            Welcome! Access powerful tools to manage inventory, finances, and employees—all in one place. Simplify operations and drive smarter decisions with ease.
-          </Text> */}
+         
         </Animated.View>
 
         {/* Menu Grid */}

@@ -46,7 +46,7 @@ export default function Index() {
   const insets = useSafeAreaInsets();
 
   const menuItems = [
-    { title: "Client Requests", icon: RequestForHome, color: "#22c55e", route: "/(tabs)/requests", animation: FadeInLeft.duration(700) },
+    { title: "Client Leads", icon: RequestForHome, color: "#22c55e", route: "/(tabs)/requests", animation: FadeInLeft.duration(700) },
     { title: "Client Requirements", icon: RequirementForHome, color: "#6366f1", route: "/(tabs)/requirements", animation: FadeInRight.duration(700) },
     { title: "Client Relationship", icon: RelationShipForHome, color: "#ec4899", route: "/(tabs)/relationship", animation: FadeInLeft.duration(700).delay(200) },
     { title: "Client Quotation", icon: QuotationFormHome, color: "#06b6d4", route: "/(tabs)/quotation", animation: FadeInRight.duration(700).delay(200) },

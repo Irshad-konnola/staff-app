@@ -154,6 +154,10 @@ function RootLayoutNav() {
           name="add-requirement"
           options={{ headerShown: false }}
         />
+         <Stack.Screen
+          name="add-quotation"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="add-relationship"
           options={{ headerShown: false }}

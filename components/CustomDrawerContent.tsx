@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Animated, Dimensions, Pressable } from "react-native";
+import { View, Animated, Dimensions, Pressable,Alert } from "react-native";
 import { Image } from "native-base";
 import { Text } from "@/components/Text";
 import { cn } from "@/lib/utils";
@@ -13,6 +13,8 @@ import {
 } from "@/constants/images";
 import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
 import { DrawerNavigationState, ParamListBase } from "@react-navigation/native";
+import { authAPI } from "@/services/api";
+import { router } from "expo-router";
 
 const CustomDrawerContent = ({
   navigation,
@@ -24,13 +26,60 @@ const CustomDrawerContent = ({
   const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
   const menuItems = [
     { name: "requirements", title: "Requirements", icon: ClientRequirements },
-    { name: "requests", title: "Requests", icon: ClientRequirequests },
+    { name: "requests", title: "Leads", icon: ClientRequirequests },
     { name: "relationship", title: "Relationship", icon: ClientRelationShip },
     { name: "quotation", title: "Quotation", icon: Quotation },
         { name: "ticketing", title: "Ticketing", icon: ClientTicketing },
 
   ];
   const currentRouteName = state.routeNames[state.index];
+
+    const handleLogout = async () => {
+    // Show confirmation alert
+    Alert.alert(
+      "Logout",
+      "Are you sure you want to logout?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Logout",
+          style: "destructive",
+          onPress: performLogout
+        }
+      ]
+    );
+  };
+
+  const performLogout = async () => {
+    try {
+      console.log("Logging out...");
+      
+      // Call the logout API
+      await authAPI.logout();
+      
+      console.log("Logout successful");
+      
+      // Navigate to login screen and clear navigation history
+      router.replace("/login");
+      
+    } catch (error) {
+      console.error("Logout error:", error);
+      
+      // Even if API call fails, clear local storage and redirect
+      try {
+        await authAPI.logout(); // This will clear local storage
+      } catch (storageError) {
+        console.error("Storage clearance error:", storageError);
+      }
+      
+      // Still navigate to login
+      router.replace("/login");
+    }
+  };
+
   return (
     <View className="flex-1 bg-black/95 p-4">
       {/* Logo Section */}
@@ -117,7 +166,7 @@ const CustomDrawerContent = ({
       </View> */}
        <View className="mt-auto mb-4 p-4">
               <AnimatedPressable
-                onPress={() => navigation.navigate("login")}
+          onPress={handleLogout}
                 className="bg-red-600/20 border border-red-600/30 p-3 rounded-xl"
               >
                 <Text className="text-red-400 text-center font-semibold">
